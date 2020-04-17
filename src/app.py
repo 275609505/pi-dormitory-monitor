@@ -1,4 +1,5 @@
-from flask import Flask,jsonify
+from flask import Flask,jsonify,request
+from src.sms import sms_reply
 
 app = Flask(__name__)
 
@@ -7,6 +8,6 @@ app = Flask(__name__)
 def root():
   return jsonify({ 'message': 'Monitor API is up and running' })
 
-
-if __name__ == '__main__':
-    app.run()
+@app.route('/message', methods=['POST'])
+def message():
+  return sms_reply(request.form)
